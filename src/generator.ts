@@ -130,7 +130,7 @@ function declareNamedTypes(
     case 'TUPLE':
     case 'UNION':
       type = [
-        hasStandaloneName(ast) ? generateStandaloneType(ast, options) : undefined,
+        hasStandaloneName(ast) && (ast.standaloneName === rootASTName || options.declareExternallyReferenced) ? generateStandaloneType(ast, options) : undefined,
         ast.params.map(ast => declareNamedTypes(ast, options, rootASTName, processed)).filter(Boolean).join('\n'),
         ('spreadParam' in ast && ast.spreadParam) ? declareNamedTypes(ast.spreadParam, options, rootASTName, processed) : undefined
       ].filter(Boolean).join('\n')
